@@ -4,4 +4,5 @@ easyocr
 pillow
 streamlit
 ultralytics
+roboflow
 
