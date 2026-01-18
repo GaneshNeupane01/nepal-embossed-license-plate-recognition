@@ -18,7 +18,7 @@ def _run_pipeline_on_plate_image(plate_img):
     kernel = np.ones((3,3), np.uint8)
     eroded = cv2.erode(gray, kernel, iterations=1)
 
-    ocr_results = reader.readtext(eroded, paragraph="False")
+    ocr_results = reader.readtext(eroded,detail=1, paragraph="False")
     if not ocr_results:
         print("❌ OCR failed to find text")
         return None
