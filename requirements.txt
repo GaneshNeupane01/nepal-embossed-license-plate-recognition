@@ -1,8 +1,7 @@
-ultralytics
-roboflow
-opencv-python-headless==4.10.0.84
+opencv-python-headless
 numpy
 easyocr
-Pillow
+pillow
 streamlit
+ultralytics
 
