@@ -1,7 +1,7 @@
 # 🇳🇵 Nepal Embossed License Plate Recognition System (YOLOv8 + OCR)
 ## 🟢 Project is live on https://nepal-embossed-license-plate-recognition.streamlit.app/
 
-![Demo](assets/demo_output.jpg)
+![Demo](assets/demo_output.png)
 
 An **end-to-end license plate recognition system** designed specifically for **Nepal vehicle plates**, integrating:
 - **YOLOv8** for license plate detection
