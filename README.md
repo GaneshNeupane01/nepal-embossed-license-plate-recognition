@@ -1,4 +1,5 @@
 # 🇳🇵 Nepal Embossed License Plate Recognition System (YOLOv8 + OCR)
+## 🟢 Project is live on https://nepal-embossed-license-plate-recognition.streamlit.app/
 
 ![Demo](assets/demo_output.jpg)
 
@@ -62,12 +63,14 @@ nepal-license-plate-recognition/
 │
 ├── weights/best.pt
 ├── src/
-│ ├── train.py
-│ ├── evaluate_detection.py
-│ ├── detect_and_crop.py
-│ ├── ocr_plate.py
-│ └── pipeline.py
+│   ├── train.py
+│   ├── evaluate_detection.py
+│   ├── detect_and_crop.py
+│   ├── ocr_plate.py
+│   └── pipeline.py
 │
+├── streamlit/
+│   └── app.py
 ├── data/sample_images/
 ├── assets/
 ├── requirements.txt
@@ -81,42 +84,78 @@ nepal-license-plate-recognition/
 ```bash
 git clone https://github.com/GaneshNeupane01/nepal-embossed-license-plate-recognition.git
 cd nepal-license-plate-recognition
-pip install -r requirements.txt
 ```
 
 ---
 
-## ▶️ Run Full Pipeline (Detection + OCR)
+The default scripts use example images from `data/sample_images/`.
 
-There is a simple script in `src/pipeline.py` that will:
+---
 
-- Detect the plate with YOLOv8
-- Crop it and apply preprocessing
-- Run EasyOCR
-- Post-process the text using Nepal-specific rules
+# How to Run
 
-Example:
+## Option 1: Docker → Streamlit UI (recommended if you have Docker)
+
+Build the image:
 
 ```bash
-python3 src/pipeline.py
+docker build -t platedetector .
 ```
 
-The default script uses an example image from `data/sample_images/`.
+Run the container and expose the Streamlit port:
 
----
+```bash
+docker run -p 8501:8501 platedetector
+```
 
-## 🖥️ Streamlit Demo (Image Upload + Bounding Box)
+Then open in your browser:
 
-A minimal Streamlit app is provided in `streamlit/app.py`.
+```text
+http://localhost:8501
+```
 
-It allows you to:
+The UI allows you to:
 
 - Upload an image (JPG/PNG)
 - Run YOLOv8 to detect the plate region
 - Draw a bounding box on the detected plate
 - Run OCR + correction and display the final plate number
 
-Run locally from the project root:
+---
+
+## Option 2: Local Environment (without Docker)
+
+Create and activate a virtual environment (recommended):
+
+```bash
+python -m venv .venv
+source .venv/bin/activate  # Linux/macOS
+# .venv\\Scripts\\activate  # Windows
+```
+
+Install dependencies (NumPy is already pinned in `requirements.txt` for PyTorch compatibility):
+
+```bash
+pip install -r requirements.txt
+```
+
+If you do not already have a compatible CPU build of PyTorch and torchvision, you can install them explicitly (CPU-only example):
+
+```bash
+pip install --no-cache-dir \
+	torch==2.1.2+cpu torchvision==0.16.2+cpu \
+	-f https://download.pytorch.org/whl/torch_stable.html
+```
+
+If you see a "Numpy is not available" error from PyTorch, make sure you are using a NumPy version `< 2.0` (already specified in `requirements.txt`).
+
+---
+
+### Option 2.1: Direct Streamlit UI
+
+A minimal Streamlit app is provided in `streamlit/app.py`.
+
+Run from the project root:
 
 ```bash
 streamlit run streamlit/app.py
@@ -128,6 +167,27 @@ Then open the URL shown in the terminal (typically `http://localhost:8501`).
 
 ---
 
+### Option 2.2: CLI (Detection + OCR)
+
+There is a simple script in `src/pipeline.py` that will:
+
+- Detect the plate with YOLOv8
+- Crop it and apply preprocessing
+- Run EasyOCR
+- Post-process the text using Nepal-specific rules
+
+Example (uses a default sample image if no argument is given):
+
+```bash
+python3 src/pipeline.py
+```
+
+To run on your own image:
+
+```bash
+python3 src/pipeline.py /path/to/your/image.jpg
+```
+
 ## ☁️ Deploying on Hugging Face Spaces (Docker)
 
 This repo includes a `Dockerfile` configured for Hugging Face Spaces.
@@ -136,11 +196,11 @@ Key points:
 
 - Uses `python:3.10-slim`
 - Installs all dependencies from `requirements.txt`
-- Exposes port `7860`
+- Exposes port `8501`
 - Starts Streamlit with:
 
 	```bash
-	streamlit run streamlit/app.py --server.port 7860 --server.address 0.0.0.0
+	streamlit run streamlit/app.py --server.port 8501 --server.address 0.0.0.0
 	```
 
 To deploy:

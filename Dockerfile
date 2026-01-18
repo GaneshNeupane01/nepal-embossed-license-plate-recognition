@@ -11,6 +11,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxrender1 \
     && rm -rf /var/lib/apt/lists/*
 
+RUN pip install --no-cache-dir \
+    torch==2.1.2+cpu torchvision==0.16.2+cpu \
+    -f https://download.pytorch.org/whl/torch_stable.html
+
 # Install Python dependencies
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt

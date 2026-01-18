@@ -59,5 +59,5 @@ def run_pipeline(image_path):
 
 
 if __name__ == "__main__":
-    plate = run_pipeline("data/sample_images/test.jpg")
+    plate = run_pipeline("data/sample_images/sample1.png")
     print("Detected Plate:", plate)
