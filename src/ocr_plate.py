@@ -34,11 +34,13 @@ def clean_text(text: str) -> str:
     return text
 
 def correct_plate(text: str):
+    print(f"Raw OCR text: {text}")
     if len(text) >= 7:
         text = text[-7:]
+    
 
     chars = list(text)
-
+    print(f"Before correction: {''.join(chars)}")  
     # First 3 letters
     for i in range(min(3, len(chars))):
         if chars[i].isdigit():

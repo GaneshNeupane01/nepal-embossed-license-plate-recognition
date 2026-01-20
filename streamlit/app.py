@@ -43,6 +43,7 @@ def detect_plate_and_ocr(image_np: np.ndarray):
 
     # Run OCR pipeline on cropped plate
     plate_text = _run_pipeline_on_plate_image(plate_img)
+ 
 
     # Draw bounding box on a copy for visualization
     annotated = image_np.copy()
@@ -61,7 +62,7 @@ def main():
         image = Image.open(uploaded_file).convert("RGB")
         image_np = np.array(image)
 
-        st.image(image, caption="Uploaded image", use_column_width=True)
+        st.image(image, caption="Uploaded image", width="content")
 
         if st.button("Detect Plate"):
             with st.spinner("Running detection and OCR..."):
@@ -73,7 +74,7 @@ def main():
                 st.success(f"Detected plate number: **{plate_text}**")
 
                 annotated_rgb = cv2.cvtColor(annotated, cv2.COLOR_BGR2RGB) if annotated.shape[2] == 3 else annotated
-                st.image(annotated_rgb, caption="Detected plate region", use_column_width=True)
+                st.image(annotated_rgb, caption="Detected plate region", width="content")
 
 
 if __name__ == "__main__":

@@ -28,12 +28,13 @@ def _run_pipeline_on_plate_image(plate_img):
     for (bbox, text, conf) in ocr_results:
         if conf < 0.2: continue # Ignore very low confidence
         full_text += text + " "
-            
-        full_text = full_text.strip().upper()
 
+    full_text = full_text.strip().upper()
+    print(f"OCR detected text: {full_text}")
+    cleaned = clean_input(full_text)
+    print(f"Cleaned OCR text: {cleaned}")
+    final_plate = correct_plate(cleaned)      
 
-        cleaned = clean_input(full_text)
-        final_plate = correct_plate(cleaned)
 
     return final_plate
 
