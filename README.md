@@ -243,9 +243,10 @@ Once the build is complete, open the Space URL and you will see the upload inter
 ---
 
 ## 👤 Author
-
-Ganesh Neupane  
+**Ganesh Neupane**
 Computer Engineering | AI / ML
+- GitHub: [@GaneshNeupane01](https://github.com/GaneshNeupane01)
+- Detail: [@portfolio](https://ganesh-neupane.com.np)
 
 
 
